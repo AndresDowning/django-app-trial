@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1>Edit Record</h1>
+            <form method="post" action="{% url 'edit_record' record.id %}">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" value="{{ record.first_name }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" value="{{ record.last_name }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="ph_name" class="form-label">PH Name</label>
+                    <input type="text" class="form-control" id="ph_name" name="ph_name" value="{{ record.ph_name }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="cellphone_number" class="form-label">Cellphone Number</label>
+                    <input type="text" class="form-control" id="cellphone_number" name="cellphone_number" value="{{ record.cellphone_number }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email_address" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email_address" name="email_address" value="{{ record.email_address }}" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Update Record</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt-5">  <!-- Change to container-fluid -->
+    <div class="row justify-content-center">
+        <div class="col">  <!-- Change to col -->
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3 mb-3" role="alert">
+                        <strong>Note:</strong> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if user.is_authenticated %}
+                <h1>Welcome to Urban Pay, {{ user.username }}!</h1>
+                <h2>Inquilinos</h2>
+
+                
+                <a href="{% url 'add_record' %}" class="btn btn-success mb-3">Add New Record</a>
+
+                {% if records %}
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">PH Name</th>
+                            <th scope="col">Cellphone Number</th>
+                            <th scope="col">Email Address</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
+                                <td>{{ record.created_at }}</td>
+                                <td>{{ record.first_name }}</td>
+                                <td>{{ record.last_name }}</td>
+                                <td>{{ record.ph_name }}</td>
+                                <td>{{ record.cellphone_number }}</td>
+                                <td>{{ record.email_address }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No records found.</p>
+                {% endif %}
+            {% else %}
+                <h1 class="mb-4">Login</h1>
+                <form method="post" action="{% url 'home' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="usernameInput" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="usernameInput" name="username" placeholder="Username" required>
+                        <div id="usernameHelp" class="form-text">We'll never share your username with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember">
+                        <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
